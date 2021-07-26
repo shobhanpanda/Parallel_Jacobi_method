@@ -1,0 +1,16 @@
+#PBS -N jacobi            // A name for this run, can be anything
+#PBS -l nodes=4:ppn=20     // 2 nodes, 8 cores in each
+#PBS -l mem=4gb           // 2 GB 'Total' memory requirement
+#PBS -l walltime=00:10:00 // 15 min, after which job is killed!!
+#PBS -q coc-ice-multi     // submitting to queue named "coc-ice-multi"
+#PBS -o jacobi.out         // output file name
+#PBS -o jacobi.err         // stderr file name
+#PBS -m abe               // Notify on start, finish and error
+#PBS -M mwelty7@gatech.edu // via email
+
+echo "Started on `/bin/hostname`"
+cd ~/storage/home/hcocice1/mwelty7/CSE_6220/HWs/PA3/HPC_HW-3
+module load gcc/8.3.0 mvapich2make
+make clean
+make test
+mpirun -np 36 ./mpi_tests
